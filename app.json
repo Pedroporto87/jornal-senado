@@ -37,6 +37,13 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "74d24850-49d7-4d30-bb79-20080719dd20"
+      }
+    },
+    "owner": "pedroporto87"
   }
 }
