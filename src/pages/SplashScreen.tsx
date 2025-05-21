@@ -1,27 +1,57 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
-import { View, Text, Image, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, Image, StyleSheet, Animated } from 'react-native';
 
-
+const message = [
+    "Jornal do Senado",
+    "Saiba tudo no Jornal Senado",
+    "Aguarde um minutinho...",
+]
 
 const SplashScreen: React.FC = () => {
+    const [currentIndex, setCurrentIndex] = useState(0);
     const [loading, setLoading] = useState(true);
+    const opacity = useRef(new Animated.Value(1)).current;
 
+
+    // useEffect(() => {
+    //      const loadData = async () => {
+    //         await new Promise(resolve => setTimeout(resolve, 4000)) 
+    //         setLoading(false)
+    //     };
+    //     loadData()
+    // }, []);
+   
     useEffect(() => {
-         const loadData = async () => {
-            await new Promise(resolve => setTimeout(resolve, 4000)) 
-            setLoading(false)
-        };
-        loadData()
-    }, []);
+        const interval = setInterval(() => {
+          Animated.timing(opacity, {
+            toValue: 0,
+            duration: 400,
+            useNativeDriver: true,
+          }).start(() => {
+            setCurrentIndex(prev => (prev + 1) % message.length);
+
+            Animated.timing(opacity, {
+              toValue: 1,
+              duration: 400,
+              useNativeDriver: true,
+            }).start();
+          });
+        }, 1500);
+    
+        return () => clearInterval(interval);
+      }, []);
+
+
     const navigation = useNavigation<NavigationProp<any>>();
-
     useEffect(() => {
-      if(!loading) {
-        navigation.navigate('MainScreen');
-      }
-    }, [loading]);
+        const timer = setTimeout(() => {
+          navigation.navigate('MainScreen');
+        }, 12000); 
+    
+        return () => clearTimeout(timer);
+      }, [navigation]);
 
     if(loading) {
         return (
@@ -31,10 +61,9 @@ const SplashScreen: React.FC = () => {
                         style={styles.logo}
                         resizeMode='contain'
                     />
-                    <Text style={styles.message}>Jornal do Senado</Text>
-                    <Text style={styles.message}>Saiba tudo no Jornal Senado</Text>
-                    <Text style={styles.message}>Aguarde um minutinho...</Text>
-                    <ActivityIndicator size="large" color="#0000ff" style={{ marginTop: 20}}/>
+                    <Animated.Text style={[styles.message, { opacity }]}>
+                        {message[currentIndex]}
+                    </Animated.Text>
                 </View>
                );
 
