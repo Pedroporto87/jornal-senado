@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
-import { View, Text, Image, StyleSheet, Animated } from 'react-native';
+import { View, Image, StyleSheet, Animated } from 'react-native';
 
 const message = [
     "Jornal do Senado",
@@ -27,14 +27,14 @@ const SplashScreen: React.FC = () => {
         const interval = setInterval(() => {
           Animated.timing(opacity, {
             toValue: 0,
-            duration: 400,
+            duration: 100,
             useNativeDriver: true,
           }).start(() => {
             setCurrentIndex(prev => (prev + 1) % message.length);
 
             Animated.timing(opacity, {
               toValue: 1,
-              duration: 400,
+              duration: 100,
               useNativeDriver: true,
             }).start();
           });

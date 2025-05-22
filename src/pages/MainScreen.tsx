@@ -1,15 +1,28 @@
-import { Text, View } from "react-native";
+import React, { useState } from 'react';
+import { Text, View, StyleSheet } from "react-native";
+import  { Navbar }  from "../components/Navbar";
 
 export default function Index() {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleFilterPress = () => {
+    // implemente o que acontecer ao clicar no botão de filtros
+    alert('Filtros clicados!');
+  };
+
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
+    <View style={styles.container}>
+    <Navbar
+        searchTerm={searchTerm}
+        onChangeSearch={setSearchTerm}
+        onFilterPress={handleFilterPress}
+      />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
