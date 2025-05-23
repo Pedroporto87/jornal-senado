@@ -6,7 +6,7 @@ import { View, Image, StyleSheet, Animated } from 'react-native';
 const message = [
     "Jornal do Senado",
     "Saiba tudo no Jornal Senado",
-    "Aguarde um minutinho...",
+    "Noticias relevantes em breve...",
 ]
 
 const SplashScreen: React.FC = () => {
@@ -14,14 +14,6 @@ const SplashScreen: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const opacity = useRef(new Animated.Value(1)).current;
 
-
-    // useEffect(() => {
-    //      const loadData = async () => {
-    //         await new Promise(resolve => setTimeout(resolve, 4000)) 
-    //         setLoading(false)
-    //     };
-    //     loadData()
-    // }, []);
    
     useEffect(() => {
         const interval = setInterval(() => {
