@@ -44,6 +44,7 @@ export default function MainScreen() {
               imageUrl={item.urlToImage}
               publishedAt={item.publishedAt}
               url={item.url}
+              content={item.content}
             />
           )}
         />

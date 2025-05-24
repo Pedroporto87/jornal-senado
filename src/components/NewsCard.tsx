@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, Linking, StyleSheet } from 'react-native';
-import { FavoriteButton } from './FavoriteBottom';
-import { getTimeAgo } from '../helpers/getTimeAgo'
+import { getTimeAgo } from '../helpers/getTimeAgo';
+import { DetailModal } from './DetailsModal';
 
 interface NewsProps {
   source: string;
@@ -9,26 +9,31 @@ interface NewsProps {
   imageUrl?: string;
   publishedAt: string;
   url: string;
+  content: string;
 }
 
-export const NewsCard: React.FC<NewsProps> = ({ source, title, imageUrl, publishedAt, url }) => {
+export const NewsCard: React.FC<NewsProps> = ({ source, title, imageUrl, publishedAt, url, content }) => {
+   const [modal, setModal] = useState(false);
   return (
-    <View style={styles.card}>
-      <Text style={styles.source}>{source}</Text>
-      
-      {imageUrl && (
-        <Image source={{ uri: imageUrl }} style={styles.image} />
-      )}
+    <>
+      <TouchableOpacity onPress={() => setModal(true)}>
+        <View style={styles.card}>
+          <Text style={styles.source}>{source}</Text>
+          {imageUrl && <Image source={{ uri: imageUrl }} style={styles.image} />}
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.date}>{getTimeAgo(publishedAt)}</Text>
+        </View>
+      </TouchableOpacity>
 
-      <Text style={styles.title}>{title}</Text>
-      <View style={styles.footerCard}>
-      <Text style={styles.date}>{getTimeAgo(publishedAt)}</Text>
-        <TouchableOpacity onPress={() => Linking.openURL(url)} style={styles.centerLink}>
-            <Text style={styles.link}>Ver mais</Text>
-        </TouchableOpacity>
-        <FavoriteButton />   
-      </View>
-    </View>
+      <DetailModal
+        visible={modal}
+        onClose={() => setModal(false)}
+        title={title}
+        imageUrl={imageUrl}
+        content={content}
+        url={url}
+      />
+    </>
   );
 };
 
