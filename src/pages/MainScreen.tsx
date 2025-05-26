@@ -4,22 +4,36 @@ import { useSelector, useDispatch } from 'react-redux'
 import  { Navbar }  from "../components/Navbar";
 import { NewsCard } from '../components/NewsCard';
 import { getNews } from '../features/newsActions'
+import { FavoritesFilterBar } from '../components/FavoriteandFiltersView';
+import { RootState } from '../app/store'; 
+import { loadFavorites } from '../helpers/storage'
 
 export default function MainScreen() {
+  const [showFavorites, setShowFavorites] = useState(false);
+  const [activeFilters, setActiveFilters] = useState(false);
   const dispatch = useDispatch<typeof import('../app/store').store.dispatch>();
   const { articles, loading, error } = useSelector((state: any) => state.news);
   const [searchTerm, setSearchTerm] = useState('');
+  const favorites = useSelector((state: RootState) => state.favorites.articles);
+  const favoritesCount = favorites.length;
 
   useEffect(() => {
     dispatch(getNews());
   }, [dispatch]);
+
+  useEffect(() => {
+    loadFavorites(dispatch, null) 
+  }, [dispatch]) 
+
+  const handleFavoritesPress = () => {
+    setShowFavorites(true);
+  };
 
   const filteredArticles = articles.filter((article: any) =>
     article.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const handleFilterPress = () => {
-    // implemente o que acontecer ao clicar no botão de filtros
     alert('Filtros clicados!');
   };
 
@@ -30,7 +44,12 @@ export default function MainScreen() {
         onChangeSearch={setSearchTerm}
         onFilterPress={handleFilterPress}
       />
-            {loading && <Text>Carregando...</Text>}
+      <FavoritesFilterBar
+        favoritesCount={favoritesCount}
+        hasFilters={activeFilters} 
+        onFavoritesPress={() => setShowFavorites(true)}
+        />
+      {loading && <Text>Carregando...</Text>}
       {error && <Text>{error}</Text>}
 
       {!loading && !error && (

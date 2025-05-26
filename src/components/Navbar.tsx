@@ -25,6 +25,7 @@ export const Navbar: FC<NavBarProps> = ({ searchTerm, onChangeSearch, onFilterPr
             <TouchableOpacity style={styles.filterButton} onPress={onFilterPress}>
                 <Text style={styles.filterText}>Filtros</Text>
             </TouchableOpacity>
+            
             </View>
       </View>
     );

@@ -8,10 +8,10 @@ interface DetailsModalProps {
     title: string,
     imageUrl?: string,
     content: string,
-    url: string
+    url: string,
 }
 
-export const DetailModal: React.FC<DetailsModalProps> = ({visible, onClose, title, imageUrl, content, url}) => {
+export const DetailModal: React.FC<DetailsModalProps> = ({visible, onClose, title, imageUrl, content, url  }) => {
     return (
         <Modal
             visible = {visible}
@@ -21,7 +21,7 @@ export const DetailModal: React.FC<DetailsModalProps> = ({visible, onClose, titl
             <View style={styles.modalOverlay}>
                 <View style={styles.modalContent}>
                     {imageUrl && <Image source={{ uri: imageUrl }} style={styles.image} />}
-                    <FavoriteButton />
+                    <FavoriteButton articleUrl={url}/> 
                     <Text style={styles.title}>{title}</Text>
                     <Text style={styles.content}>{content}</Text>
                     <Button title="Ver notícia completa" onPress={() => Linking.openURL(url)} ></Button>
