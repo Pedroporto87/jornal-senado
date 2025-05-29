@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import { store } from './src/app/store'
 import MainScreen from "./src/pages/MainScreen";
 import SplashScreen from "./src/pages/SplashScreen";
+import FavoriteScreen from './src/pages/FavoriteScreen';
 
 const Stack = createNativeStackNavigator()
 
@@ -15,6 +16,7 @@ export default function App() {
                 <Stack.Navigator initialRouteName="SplashScreen" screenOptions = {{headerShown: false}}>
                     <Stack.Screen name="SplashScreen" component={SplashScreen} />
                     <Stack.Screen name="MainScreen" component={MainScreen} />
+                    <Stack.Screen name="FavoriteScreen" component={FavoriteScreen} />
                 </Stack.Navigator>
             </NavigationContainer>
         </Provider>

@@ -5,15 +5,16 @@ interface NavBarProps {
     searchTerm: string;
     onChangeSearch: (text: string) => void;
     onFilterPress: () => void;
+
 }
 
-export const Navbar: FC<NavBarProps> = ({ searchTerm, onChangeSearch, onFilterPress }) => {
+export const Navbar: FC<NavBarProps> = ({ searchTerm, onChangeSearch, onFilterPress,  }) => {
     return (
         <View style={styles.container}>
             <View style={styles.titleContainer}>
                 <Text style={styles.title}>Jornal do Senado</Text>
             <View style={styles.titleBorder} />
-        </View>
+            </View>
             <View style={styles.searchBorder} />
             <View style={styles.searchContainer}>
                 <TextInput
@@ -25,7 +26,7 @@ export const Navbar: FC<NavBarProps> = ({ searchTerm, onChangeSearch, onFilterPr
             <TouchableOpacity style={styles.filterButton} onPress={onFilterPress}>
                 <Text style={styles.filterText}>Filtros</Text>
             </TouchableOpacity>
-            
+
             </View>
       </View>
     );
@@ -83,5 +84,6 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontWeight: 'bold',
       },
+      
   });
 

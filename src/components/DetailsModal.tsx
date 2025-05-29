@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, Image, Button, Modal, StyleSheet, TouchableOpacity, Linking } from 'react-native'
-import { FavoriteButton } from "./FavoriteBottom";
+
 
 interface DetailsModalProps {
     visible: boolean,
@@ -21,7 +21,6 @@ export const DetailModal: React.FC<DetailsModalProps> = ({visible, onClose, titl
             <View style={styles.modalOverlay}>
                 <View style={styles.modalContent}>
                     {imageUrl && <Image source={{ uri: imageUrl }} style={styles.image} />}
-                    <FavoriteButton articleUrl={url}/> 
                     <Text style={styles.title}>{title}</Text>
                     <Text style={styles.content}>{content}</Text>
                     <Button title="Ver notícia completa" onPress={() => Linking.openURL(url)} ></Button>

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, Linking, StyleSheet } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { getTimeAgo } from '../helpers/getTimeAgo';
 import { DetailModal } from './DetailsModal';
+import { FavoriteButton } from './FavoriteBottom';
 
 interface NewsProps {
   source: string;
@@ -21,7 +22,17 @@ export const NewsCard: React.FC<NewsProps> = ({ source, title, imageUrl, publish
           <Text style={styles.source}>{source}</Text>
           {imageUrl && <Image source={{ uri: imageUrl }} style={styles.image} />}
           <Text style={styles.title}>{title}</Text>
-          <Text style={styles.date}>{getTimeAgo(publishedAt)}</Text>
+          <View style={styles.footerCard}>
+            <Text style={styles.date}>{getTimeAgo(publishedAt)}</Text>
+            <FavoriteButton 
+                source={source}
+                title={title}
+                articleUrl={url}
+                publishedAt={publishedAt}
+                imageUrl={imageUrl}
+                content={content} 
+            />
+          </View>
         </View>
       </TouchableOpacity>
 

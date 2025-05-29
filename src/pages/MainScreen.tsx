@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../types/types';
 import { Text, View, StyleSheet, FlatList } from "react-native";
 import { useSelector, useDispatch } from 'react-redux'
 import  { Navbar }  from "../components/Navbar";
@@ -7,6 +10,9 @@ import { getNews } from '../features/newsActions'
 import { FavoritesFilterBar } from '../components/FavoriteandFiltersView';
 import { RootState } from '../app/store'; 
 import { loadFavorites } from '../helpers/storage'
+import { setFavorite } from '../features/favoriteActions';
+
+
 
 export default function MainScreen() {
   const [showFavorites, setShowFavorites] = useState(false);
@@ -16,17 +22,18 @@ export default function MainScreen() {
   const [searchTerm, setSearchTerm] = useState('');
   const favorites = useSelector((state: RootState) => state.favorites.articles);
   const favoritesCount = favorites.length;
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList, 'MainScreen'>>()
 
   useEffect(() => {
     dispatch(getNews());
   }, [dispatch]);
 
   useEffect(() => {
-    loadFavorites(dispatch, null) 
+    loadFavorites(dispatch, setFavorite) 
   }, [dispatch]) 
 
   const handleFavoritesPress = () => {
-    setShowFavorites(true);
+    navigation.navigate('FavoriteScreen'); // nome da sua tela
   };
 
   const filteredArticles = articles.filter((article: any) =>
@@ -47,7 +54,7 @@ export default function MainScreen() {
       <FavoritesFilterBar
         favoritesCount={favoritesCount}
         hasFilters={activeFilters} 
-        onFavoritesPress={() => setShowFavorites(true)}
+        onFavoritesPress={handleFavoritesPress}
         />
       {loading && <Text>Carregando...</Text>}
       {error && <Text>{error}</Text>}
@@ -68,7 +75,6 @@ export default function MainScreen() {
           )}
         />
       )}
-
     </View>
   );
 }
