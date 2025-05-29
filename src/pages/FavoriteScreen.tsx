@@ -1,11 +1,12 @@
 import React, { useState, useEffect} from "react";
 import { RootState } from '../app/store';
-import { View, FlatList, Text, StyleSheet } from 'react-native';
+import { View, FlatList, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { loadFavorites } from "../helpers/storage";
 import { NewsCard } from "../components/NewsCard";
 import { useSelector, useDispatch } from 'react-redux'
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
-export default function FavoriteScreen() {
+export default function FavoriteScreen({ navigation }) {
     const dispatch = useDispatch();
     const favorites = useSelector((state: RootState) => state.favorites.articles);
     const [favoriteArticles, setFavoriteArticles] = useState([]);
@@ -18,11 +19,16 @@ export default function FavoriteScreen() {
 
       return (
       <View style={styles.container}>
-            <View style={styles.titleContainer}>
+        <View style={styles.headerContainer}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MainScreen')}>
+                <MaterialCommunityIcons name="home-outline" size={28} color="blue" />
+            </TouchableOpacity>
+            <View>
                 <Text style={styles.title}>Jornal do Senado</Text>
-            <View style={styles.titleBorder} />
             </View>
-            <View style={styles.searchBorder} />
+        </View>
+        <View style={styles.titleBorder} />
+        <View style={styles.searchBorder} />
           {favorites.length === 0 ? (
             <Text style={styles.msg}>Sem favoritos ainda</Text>
           ) : (
@@ -30,15 +36,15 @@ export default function FavoriteScreen() {
                 data={favorites}
                 keyExtractor={(item) => item.url}
                 renderItem={({ item }) => (
-                <NewsCard
-                    source={item.source}
-                    title={item.title}
-                    imageUrl={item.urlToImage}
-                    publishedAt={item.publishedAt}
-                    url={item.url}
-                    content={item.content}
-                />
-            )}
+                    <NewsCard
+                        source={item.source}
+                        imageUrl={item.imageUrl}
+                        title={item.title}
+                        publishedAt={item.publishedAt}
+                        url={item.url}
+                        content={item.content}
+                    />
+                )}
             />
           )}
         </View>
@@ -55,11 +61,18 @@ const styles = StyleSheet.create({
       marginTop: 20,
       fontSize: 16,
     },
-    titleContainer: {
-        marginTop: 30,
+    headerContainer: {
+        flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'center', // Centraliza horizontalmente
+        marginTop: 30,
+        position: 'relative', // Para posicionar a view com o título
       },
-    title: {
+      button: {
+        position: 'absolute',
+        left: 10,
+      },
+      title: {
         fontSize: 24,
         fontWeight: 'bold',
       },
@@ -75,5 +88,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#53b94f', 
         width: '100%',
         marginTop: 1,
+      },
+      image: {
+        height: 200,
+        borderRadius: 8,
+        marginBottom: 8,
       },
   });
