@@ -1,14 +1,12 @@
 import React, { FC } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TextInput } from 'react-native';
 
 interface NavBarProps {
     searchTerm: string;
     onChangeSearch: (text: string) => void;
-    onFilterPress: () => void;
-
 }
 
-export const Navbar: FC<NavBarProps> = ({ searchTerm, onChangeSearch, onFilterPress,  }) => {
+export const Navbar: FC<NavBarProps> = ({ searchTerm, onChangeSearch  }) => {
     return (
         <View style={styles.container}>
             <View style={styles.titleContainer}>
@@ -23,9 +21,9 @@ export const Navbar: FC<NavBarProps> = ({ searchTerm, onChangeSearch, onFilterPr
                     value={searchTerm}
                     onChangeText={onChangeSearch}
                 />
-            <TouchableOpacity style={styles.filterButton} onPress={onFilterPress}>
+            {/* <TouchableOpacity style={styles.filterButton} onPress={onFilterPress}>
                 <Text style={styles.filterText}>Filtros</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             </View>
       </View>
@@ -39,7 +37,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingTop: 10,
         paddingBottom: 10,
-        marginBottom: 5
     },
     titleContainer: {
         alignItems: 'center',

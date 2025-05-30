@@ -1,6 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from '@expo/vector-icons/AntDesign';
+import { Picker } from '@react-native-picker/picker';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSubject, setLanguage } from '../features/filterActions';
 
 interface FavoritesFilterBarProps {
     favoritesCount: number;
@@ -13,12 +16,44 @@ interface FavoritesFilterBarProps {
     onFavoritesPress,
     hasFilters,
   }) => {
-    if (!hasFilters && favoritesCount === 0) {
-      return null;  // não mostrar se não tiver favoritos nem filtros
-    }
+    const dispatch = useDispatch();
+    const { subject, language } = useSelector((state: any) => state.filter);
+
+    const handleSubjectChange = (itemValue: string) => {
+      dispatch(setSubject(itemValue));
+    };
+  
+    const handleLanguageChange = (itemValue: string) => {
+      dispatch(setLanguage(itemValue));
+    };
   
     return (
-      <View style={styles.container}>
+      <View style={styles.filterContainer}>
+        <View style={styles.pickerContainer}>
+        <Text style={styles.label}>Assunto:</Text>
+        <Picker
+          selectedValue={subject}
+          style={styles.picker}
+          onValueChange={handleSubjectChange}
+        >
+          <Picker.Item label="Todos" value="general" />
+          <Picker.Item label="Tecnologia" value="technology" />
+          <Picker.Item label="Negócios" value="business" />
+          <Picker.Item label="Esportes" value="sports" />
+        </Picker>
+      </View>
+      <View style={styles.pickerContainer}>
+        <Text style={styles.label}>Idioma:</Text>
+        <Picker
+          selectedValue={language}
+          style={styles.picker}
+          onValueChange={handleLanguageChange}
+        >
+          <Picker.Item label="Inglês" value="en" />
+          <Picker.Item label="Espanhol" value="es" />
+          <Picker.Item label="Francês" value="fr" />
+        </Picker>
+      </View>
         <TouchableOpacity style={styles.starContainer} onPress={onFavoritesPress}>
           <Icon name="star" size={24} color="#ffd700" />
           {favoritesCount > 0 && (
@@ -32,11 +67,38 @@ interface FavoritesFilterBarProps {
   };
 
   const styles = StyleSheet.create({
-    container: {
-      backgroundColor: '#fff',
-      flexDirection: 'row',
-      justifyContent: 'flex-end',
+    filterContainer: {
       padding: 10,
+      backgroundColor: '#fff',
+      flexDirection: 'row', 
+      alignItems: 'center', 
+      justifyContent: 'space-between', 
+      borderBottomColor: '#8e8e8e',
+      borderBottomWidth: 1,
+      marginBottom: 10,
+      borderRadius: 8,
+    },
+    pickerContainer: {
+      flex: 1,
+      marginVertical: 5,
+    },
+    label: {
+      fontSize: 14,
+      fontWeight: 'bold',
+    },
+    picker: {
+      height: 60,
+      width: '100%',
+    },
+    button: {
+      marginTop: 10,
+      backgroundColor: '#007bff',
+      padding: 10,
+      borderRadius: 5,
+    },
+    buttonText: {
+      color: '#fff',
+      textAlign: 'center',
     },
     starContainer: {
       position: 'relative',
