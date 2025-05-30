@@ -23,10 +23,12 @@ export default function MainScreen() {
   const favorites = useSelector((state: RootState) => state.favorites.articles);
   const favoritesCount = favorites.length;
   const navigation = useNavigation<StackNavigationProp<RootStackParamList, 'MainScreen'>>()
+  const { subject, language } = useSelector((state: RootState) => state.filter);
+
 
   useEffect(() => {
-    dispatch(getNews());
-  }, [dispatch]);
+    dispatch(getNews({ subject, language }));
+  }, [dispatch, subject, language]);
 
   useEffect(() => {
     loadFavorites(dispatch, setFavorite) 
@@ -40,16 +42,12 @@ export default function MainScreen() {
     article.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleFilterPress = () => {
-    alert('Filtros clicados!');
-  };
-
   return (
     <View style={styles.container}>
     <Navbar
         searchTerm={searchTerm}
         onChangeSearch={setSearchTerm}
-        onFilterPress={handleFilterPress}
+
       />
       <FavoritesFilterBar
         favoritesCount={favoritesCount}
