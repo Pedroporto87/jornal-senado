@@ -1,10 +1,11 @@
 import React, { useState, useEffect} from "react";
 import { RootState } from '../app/store';
-import { View, FlatList, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, FlatList, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { loadFavorites } from "../helpers/storage";
 import { NewsCard } from "../components/NewsCard";
 import { useSelector, useDispatch } from 'react-redux'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+const Estrela = require('../../assets/images/estrela-triste.png');
 
 export default function FavoriteScreen({ navigation }) {
     const dispatch = useDispatch();
@@ -30,7 +31,15 @@ export default function FavoriteScreen({ navigation }) {
         <View style={styles.titleBorder} />
         <View style={styles.searchBorder} />
           {favorites.length === 0 ? (
-            <Text style={styles.msg}>Sem favoritos ainda</Text>
+                <View style={{ 
+                    flex: 1, 
+                    justifyContent: 'center', 
+                    alignItems: 'center',
+                    marginTop: 20 
+                }}>
+                <Image source={Estrela} style={styles.image} />
+                <Text style={styles.msg}>Sem favoritos ainda</Text>
+            </View>
           ) : (
             <FlatList
                 data={favorites}
@@ -64,9 +73,9 @@ const styles = StyleSheet.create({
     headerContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center', // Centraliza horizontalmente
+        justifyContent: 'center',
         marginTop: 30,
-        position: 'relative', // Para posicionar a view com o título
+        position: 'relative',
       },
       button: {
         position: 'absolute',
@@ -90,7 +99,8 @@ const styles = StyleSheet.create({
         marginTop: 1,
       },
       image: {
-        height: 200,
+        width: 200,
+        height: 200, 
         borderRadius: 8,
         marginBottom: 8,
       },
