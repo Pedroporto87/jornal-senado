@@ -11,6 +11,7 @@ const message = [
 
 const SplashScreen: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [cycleFinished, setCycleFinished] = useState(false);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const opacity = useRef(new Animated.Value(1)).current; 
   const durationPerMessage = 1500; // ms
@@ -39,7 +40,7 @@ const SplashScreen: React.FC = () => {
   }, []);
 
   // Controlar o fim do ciclo
-  const [cycleFinished, setCycleFinished] = useState(false);
+  
 
   useEffect(() => {
       const timer = setTimeout(() => {

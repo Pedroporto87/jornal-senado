@@ -5,18 +5,31 @@ import { loadFavorites } from "../helpers/storage";
 import { NewsCard } from "../components/NewsCard";
 import { useSelector, useDispatch } from 'react-redux'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import ErrorComponent from '../components/ErrorComponent';
 const Estrela = require('../../assets/images/estrela-triste.png');
 
 export default function FavoriteScreen({ navigation }) {
     const dispatch = useDispatch();
     const favorites = useSelector((state: RootState) => state.favorites.articles);
     const [favoriteArticles, setFavoriteArticles] = useState([]);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        loadFavorites(dispatch).then((articles) => {
-          setFavoriteArticles(articles);
-        });
-      }, []);
+        loadFavorites(dispatch)
+          .then((articles) => {
+            setFavoriteArticles(articles);
+            setError(null); // limpa erro se deu sucesso
+          })
+          .catch((err) => {
+            setError('Erro ao carregar favoritos.');
+            console.error(err);
+          });
+      }, [dispatch]);
+    
+      if (error) {
+        // mostra o componente de erro
+        return <ErrorComponent message='Erro ao carregar as mensagens favoritadas!' />;
+      }
 
       return (
       <View style={styles.container}>

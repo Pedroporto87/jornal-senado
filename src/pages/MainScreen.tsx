@@ -13,10 +13,10 @@ import { loadFavorites } from '../helpers/storage'
 import { setFavorite } from '../features/favoriteActions';
 import NetInfo from '@react-native-community/netinfo';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ErrorComponent from '../components/ErrorComponent';
 
 
 export default function MainScreen() {
-  const [showFavorites, setShowFavorites] = useState(false);
   const [activeFilters, setActiveFilters] = useState(false);
   const dispatch = useDispatch<typeof import('../app/store').store.dispatch>();
   const { articles, loading, error } = useSelector((state: any) => state.news);
@@ -93,7 +93,7 @@ export default function MainScreen() {
           </View>
         </Animated.View>
       )}
-      {error && <Text>{error}</Text>}
+      {error && <ErrorComponent message="Erro ao carregar notícias" />}
 
       {!loading && !error && (
         <FlatList
