@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { View, Text, StyleSheet, TextInput } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface NavBarProps {
     searchTerm: string;
@@ -15,16 +16,13 @@ export const Navbar: FC<NavBarProps> = ({ searchTerm, onChangeSearch  }) => {
             </View>
             <View style={styles.searchBorder} />
             <View style={styles.searchContainer}>
+                <Icon name="magnify" size={20} color="#999" style={styles.searchIcon} />
                 <TextInput
                     style={styles.searchInput}
                     placeholder="Buscar notícias..."
                     value={searchTerm}
                     onChangeText={onChangeSearch}
                 />
-            {/* <TouchableOpacity style={styles.filterButton} onPress={onFilterPress}>
-                <Text style={styles.filterText}>Filtros</Text>
-            </TouchableOpacity> */}
-
             </View>
       </View>
     );
@@ -62,12 +60,15 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginTop: 10,
+        borderWidth: 2,
+        borderRadius: 8,
     },
+    searchIcon: {
+        marginLeft: 8,
+      },
     searchInput: {
         flex: 1,
         height: 40,
-        borderWidth: 2,
-        borderRadius: 8,
         paddingHorizontal: 10,
     },
     filterButton: {

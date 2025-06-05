@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, TouchableOpacity, Animated } from 'react-native';
-import Icon from '@expo/vector-icons/AntDesign'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useDispatch, useSelector } from 'react-redux'
 import { addFavorite, removeFavorite } from '../features/favoriteActions';
 import { saveFavorites } from '../helpers/storage';
@@ -56,14 +56,14 @@ interface FavoriteButtonProps {
       }
     return (
        <TouchableOpacity onPress={toggleFavorite} style={styles.button}>
-            <Icon name="star" size={24} color={favorited ? '#ffd700' : '#ccc'}/>
+            <Icon name="bookmark-outline" size={28} color={favorited ? '#ffd700' : '#ccc'}/>
        </TouchableOpacity>
     )
 }
 
 const styles = StyleSheet.create({
     button: {
-      padding: 10,
+      padding: 20,
     },
   });
 
