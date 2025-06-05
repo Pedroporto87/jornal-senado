@@ -81,6 +81,7 @@ export default function FavoriteScreen({ navigation }) {
                 </TouchableOpacity>
             </View>
           ) : (
+            <View style={styles.listContainer}>
             <FlatList
                 data={favorites}
                 keyExtractor={(item) => item.url}
@@ -95,6 +96,7 @@ export default function FavoriteScreen({ navigation }) {
                     />
                 )}
             />
+            </View>
           )}
         </View>
       </PanGestureHandler>
@@ -103,7 +105,13 @@ export default function FavoriteScreen({ navigation }) {
     }
 
 const styles = StyleSheet.create({
-    container: {
+  listContainer: {
+    alignSelf: 'center',          
+    maxWidth: 769,                
+    width: '100%',                
+    flex: 1,
+  },  
+  container: {
       flex: 1,
       padding: 10,
     },

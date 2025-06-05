@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../types/types';
-import { Text, View, StyleSheet, FlatList, Animated, Image } from "react-native";
+import { Text, View, StyleSheet, FlatList, Animated, Image, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch } from 'react-redux'
 import  { Navbar }  from "../components/Navbar";
 import { NewsCard } from '../components/NewsCard';
@@ -14,6 +14,7 @@ import { setFavorite } from '../features/favoriteActions';
 import NetInfo from '@react-native-community/netinfo';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ErrorComponent from '../components/ErrorComponent';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 export default function MainScreen() {
@@ -28,6 +29,7 @@ export default function MainScreen() {
   const [offline, setOffline] = useState(false);
   const [cacheLoaded, setCacheLoaded] = useState(false);
   const fadeAnim = useRef(new Animated.Value(1)).current;
+  const [showFilters, setShowFilters] = useState(true);
 
   useEffect(() => {
     NetInfo.fetch().then(state => {
@@ -64,6 +66,10 @@ export default function MainScreen() {
     article.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const toggleFilters = () => {
+    setShowFilters(prev => !prev);
+  };
+
   return (
     <View
     style={[
@@ -71,16 +77,27 @@ export default function MainScreen() {
       offline ? styles.offlineContainer : null
     ]}
   >
+
     <Navbar
         searchTerm={searchTerm}
         onChangeSearch={setSearchTerm}
 
       />
-      <FavoritesFilterBar
-        favoritesCount={favoritesCount}
-        hasFilters={activeFilters} 
-        onFavoritesPress={handleFavoritesPress}
+      <TouchableOpacity style={styles.header} onPress={toggleFilters}>
+        <Text style={styles.headerText}>Favoritos e Filtros</Text>
+        <Icon
+          name={showFilters ? 'chevron-up' : 'chevron-down'}
+          size={24}
+          color="#333"
         />
+      </TouchableOpacity>
+      {showFilters && (
+        <FavoritesFilterBar
+          favoritesCount={favoritesCount}
+          onFavoritesPress={handleFavoritesPress}
+          hasFilters={activeFilters}
+        />
+      )}
       {offline && (
         <Text style={styles.offlineMessage}>Modo offline</Text>
       )}
@@ -96,6 +113,7 @@ export default function MainScreen() {
       {error && <ErrorComponent message="Erro ao carregar notícias" />}
 
       {!loading && !error && (
+        <View style={styles.listContainer}>
         <FlatList
           data={filteredArticles}
           keyExtractor={(item: any) => item.url}
@@ -110,14 +128,34 @@ export default function MainScreen() {
             />
           )}
         />
+        </View>
       )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  listContainer: {
+    alignSelf: 'center',          
+    maxWidth: 769,                
+    width: '100%',                
+    flex: 1,
+  },
   container: {
     flex: 1,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 5,
+    backgroundColor: 'rgba(222, 221, 221, 0.91)',
+    borderBottomColor: '#8e8e8e',
+    borderBottomWidth: 1,
+  },
+  headerText: {
+    fontSize: 12,
+    fontWeight: 'bold',
   },
   offlineContainer: {
     backgroundColor: '#222', // fundo escuro

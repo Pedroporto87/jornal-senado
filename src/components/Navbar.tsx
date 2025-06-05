@@ -9,6 +9,7 @@ interface NavBarProps {
 
 export const Navbar: FC<NavBarProps> = ({ searchTerm, onChangeSearch  }) => {
     return (
+        
         <View style={styles.container}>
             <View style={styles.titleContainer}>
                 <Text style={styles.title}>Jornal do Senado</Text>
@@ -62,26 +63,19 @@ const styles = StyleSheet.create({
         marginTop: 10,
         borderWidth: 2,
         borderRadius: 8,
+        alignSelf: 'center',
+        maxWidth: 769, 
+        width: '100%',
     },
     searchIcon: {
         marginLeft: 8,
       },
     searchInput: {
-        flex: 1,
         height: 40,
         paddingHorizontal: 10,
+        maxWidth: 769,
+        alignSelf: 'center',
+        width: '100%',
     },
-    filterButton: {
-        marginLeft: 10,
-        paddingHorizontal: 12,
-        paddingVertical: 8,
-        backgroundColor: '#007AFF',
-        borderRadius: 8,
-      },
-      filterText: {
-        color: '#fff',
-        fontWeight: 'bold',
-      },
-      
   });
 

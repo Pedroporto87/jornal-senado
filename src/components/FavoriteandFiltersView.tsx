@@ -80,17 +80,21 @@ interface FavoritesFilterBarProps {
       borderRadius: 8,
     },
     pickerContainer: {
+      display: 'flex',
       flex: 1,
       marginVertical: 5,
-      flexDirection: 'column', // Alinhar os itens verticalmente
+      flexDirection: 'column',
+      alignItems: 'flex-start', 
+      justifyContent: 'flex-start', 
     },
     label: {
       fontSize: 14,
       fontWeight: 'bold',
-      marginBottom: 5, // Espaço entre o rótulo e o picker
+      marginBottom: 5,
+      // marginLeft: 15, 
     },
     picker: {
-      width: '100%',
+      width: '70%',
       height: 60,
     },
     button: {
@@ -105,6 +109,7 @@ interface FavoritesFilterBarProps {
     },
     starContainer: {
       position: 'relative',
+      marginRight: 10,
     },
     counter: {
       position: 'absolute',
