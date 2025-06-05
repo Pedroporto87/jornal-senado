@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import Icon from '@expo/vector-icons/AntDesign';
+// import Icon from '@expo/vector-icons/AntDesign';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Picker } from '@react-native-picker/picker';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSubject, setLanguage } from '../features/filterActions';
@@ -55,7 +56,7 @@ interface FavoritesFilterBarProps {
         </Picker>
       </View>
         <TouchableOpacity style={styles.starContainer} onPress={onFavoritesPress}>
-          <Icon name="star" size={24} color="#ffd700" />
+          <Icon name="star" size={28} color="#ffd700" />
           {favoritesCount > 0 && (
             <View style={styles.counter}>
               <Text style={styles.counterText}>{favoritesCount}</Text>
@@ -79,16 +80,22 @@ interface FavoritesFilterBarProps {
       borderRadius: 8,
     },
     pickerContainer: {
+      display: 'flex',
       flex: 1,
       marginVertical: 5,
+      flexDirection: 'column',
+      alignItems: 'flex-start', 
+      justifyContent: 'flex-start', 
     },
     label: {
       fontSize: 14,
       fontWeight: 'bold',
+      marginBottom: 5,
+      // marginLeft: 15, 
     },
     picker: {
+      width: '70%',
       height: 60,
-      width: '100%',
     },
     button: {
       marginTop: 10,
@@ -102,6 +109,7 @@ interface FavoritesFilterBarProps {
     },
     starContainer: {
       position: 'relative',
+      marginRight: 10,
     },
     counter: {
       position: 'absolute',

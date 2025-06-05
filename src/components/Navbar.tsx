@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { View, Text, StyleSheet, TextInput } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface NavBarProps {
     searchTerm: string;
@@ -8,6 +9,7 @@ interface NavBarProps {
 
 export const Navbar: FC<NavBarProps> = ({ searchTerm, onChangeSearch  }) => {
     return (
+        
         <View style={styles.container}>
             <View style={styles.titleContainer}>
                 <Text style={styles.title}>Jornal do Senado</Text>
@@ -15,16 +17,13 @@ export const Navbar: FC<NavBarProps> = ({ searchTerm, onChangeSearch  }) => {
             </View>
             <View style={styles.searchBorder} />
             <View style={styles.searchContainer}>
+                <Icon name="magnify" size={20} color="#999" style={styles.searchIcon} />
                 <TextInput
                     style={styles.searchInput}
                     placeholder="Buscar notícias..."
                     value={searchTerm}
                     onChangeText={onChangeSearch}
                 />
-            {/* <TouchableOpacity style={styles.filterButton} onPress={onFilterPress}>
-                <Text style={styles.filterText}>Filtros</Text>
-            </TouchableOpacity> */}
-
             </View>
       </View>
     );
@@ -62,25 +61,21 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginTop: 10,
-    },
-    searchInput: {
-        flex: 1,
-        height: 40,
         borderWidth: 2,
         borderRadius: 8,
-        paddingHorizontal: 10,
+        alignSelf: 'center',
+        maxWidth: 769, 
+        width: '100%',
     },
-    filterButton: {
-        marginLeft: 10,
-        paddingHorizontal: 12,
-        paddingVertical: 8,
-        backgroundColor: '#007AFF',
-        borderRadius: 8,
+    searchIcon: {
+        marginLeft: 8,
       },
-      filterText: {
-        color: '#fff',
-        fontWeight: 'bold',
-      },
-      
+    searchInput: {
+        height: 40,
+        paddingHorizontal: 10,
+        maxWidth: 769,
+        alignSelf: 'center',
+        width: '100%',
+    },
   });
 

@@ -55,6 +55,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 8,
     elevation: 2,
+    maxWidth: 769, 
+    maxHeight: 600,
   },
   source: {
     fontSize: 14,
@@ -62,9 +64,12 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   image: {
-    height: 200,
+    aspectRatio: 16/9,
     borderRadius: 8,
     marginBottom: 8,
+    resizeMode: 'cover',
+    maxWidth: 769,
+    maxHeight: 469  
   },
   title: {
     fontSize: 16,
