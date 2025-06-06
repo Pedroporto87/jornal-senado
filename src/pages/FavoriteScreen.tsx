@@ -14,7 +14,6 @@ export default function FavoriteScreen({ navigation }) {
     const favorites = useSelector((state: RootState) => state.favorites.articles);
     const [favoriteArticles, setFavoriteArticles] = useState([]);
     const [error, setError] = useState(null);
-    const translateX = useRef(0);
 
     useEffect(() => {
         loadFavorites(dispatch)

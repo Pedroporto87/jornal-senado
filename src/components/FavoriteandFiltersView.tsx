@@ -91,10 +91,10 @@ interface FavoritesFilterBarProps {
       fontSize: 14,
       fontWeight: 'bold',
       marginBottom: 5,
-      // marginLeft: 15, 
+      marginLeft: 15, 
     },
     picker: {
-      width: '70%',
+      width: '90%',
       height: 60,
     },
     button: {
